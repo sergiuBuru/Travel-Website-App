@@ -11,13 +11,13 @@ const vacationSchema = new Schema({
     type: String,
     required: true
   },
-  placesToVisit: [{
+  attractions: [{
     type: String,
-    required: true
+    required: false
   }],
   dontForgetList: [{
     type: String,
-    required: true
+    required: false
   }],
   user_id: {
     type: String,
