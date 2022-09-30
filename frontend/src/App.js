@@ -9,17 +9,15 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <MyNav />
-        <div className='pages'>
+        <div className="pages">
           <Routes>
             <Route
               path="/"
-              element= <Home />
+              // element={<Home />}
             />
-          </Routes>
-          <Routes>
             <Route
               path="/vacations"
-              element= <Vacations />
+              // element={<Vacations />}
             />
           </Routes>
         </div>

@@ -19,7 +19,7 @@ const MyNav = () => {
           {user && (
             <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>{user.email}</Navbar.Text>
-              <Button className="logout-btn" variant="outline-dark">Logout</Button>
+              <Button className="logout-btn" variant="outline-dark" size="sm">Logout</Button>
           </Navbar.Collapse>
           )}
       </Container>
