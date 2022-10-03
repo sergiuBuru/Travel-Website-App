@@ -9,13 +9,13 @@ const MyNav = () => {
   const { user } = useAuthContext()
   
   return (
-    <Navbar fixed="top" bg="light">
+    <Navbar  bg="light">
       <Container>
         <Navbar.Brand >Travel Media</Navbar.Brand>
         <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/vacations">Vacations</Nav.Link>
-          </Nav>
+            {user && <Nav.Link href="/vacations">Vacations</Nav.Link>}
+        </Nav>
           {user && (
             <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>{user.email}</Navbar.Text>
