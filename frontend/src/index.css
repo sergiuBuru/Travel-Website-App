@@ -43,3 +43,8 @@ html, body, .App, #root {
 .login-stack, .signup-stack {
   height: 80%;
 } 
+
+.home-container {
+  height: 100%;
+  width: 100%;
+}
