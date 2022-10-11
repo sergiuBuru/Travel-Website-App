@@ -18,7 +18,7 @@ const MyNav = () => {
   }
 
   return (
-    <Navbar  bg="light">
+    <Navbar bg="light" className='my-nav'>
       <Container>
         <Navbar.Brand >Travel Media</Navbar.Brand>
         <Nav className="me-auto">
