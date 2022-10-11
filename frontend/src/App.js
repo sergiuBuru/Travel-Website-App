@@ -2,13 +2,17 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import MyNav from './components/MyNav'
 import { useAuthContext } from './hooks/useAuthContext'
+
+// pages
 import Home from './pages/Home'
 import Vacations from './pages/Vacations'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import VacationForm from './pages/VacationForm'
 
 function App() {
   const { user } = useAuthContext()
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -29,7 +33,11 @@ function App() {
             />
             <Route
               path="/vacations"
-              // element={<Vacations />}
+              element={user ? <Vacations /> : <Login />}
+            />
+            <Route
+              path="/add-vacation"
+              element={user ? <VacationForm /> : <Login />}
             />
           </Routes>
         </div>
