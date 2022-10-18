@@ -9,7 +9,7 @@ html, body, .App, #root {
 
 .pages {
   width: 100%;
-  height: 100%;
+  height: 95%;
 }
 
 .footer {
@@ -21,14 +21,14 @@ html, body, .App, #root {
   background: rgb(204, 218, 240);
 }
 
-.login-container, .signup-container {
+.login-container, .signup-container, .vacation-form-container {
   height: 100%;
   display: flex;
   justify-items: center;
   justify-content: center;
 }
 
-.login-div, .signup-div {
+.login-div, .signup-div, .vacation-form-div {
   margin-top: auto;
   margin-bottom: auto;
   height: 30%;
@@ -40,11 +40,37 @@ html, body, .App, #root {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
-.login-stack, .signup-stack {
+.login-stack, .signup-stack, .vacation-form-stack {
   height: 80%;
 } 
 
 .home-container {
   height: 100%;
   width: 100%;
+}
+
+.add-button-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.vacations-container {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+}
+
+.my-nav {
+  height: 5%;
+}
+
+.signup-title-div, .login-title-div, .vacation-form-title-div {
+  text-align: center;
+  margin-top: 5%;
+}
+
+.vacation-card {
+  margin-top: 3%;
 }
