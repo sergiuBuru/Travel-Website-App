@@ -9,6 +9,7 @@ import Vacations from './pages/Vacations'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import VacationForm from './pages/VacationForm'
+import Vacation from './pages/Vacation'
 
 function App() {
   const { user } = useAuthContext()
@@ -19,26 +20,13 @@ function App() {
         <MyNav />
         <div className="pages">
           <Routes>
-            <Route
-              path="/"
-              element={<Home />}
-            />
-            <Route 
-              path="/login"
-              element={!user ? <Login /> : <Navigate to="/" />}
-            />
-            <Route 
-              path="/signup"
-              element={!user ? <Signup /> : <Navigate to="/" />}
-            />
-            <Route
-              path="/vacations"
-              element={user ? <Vacations /> : <Login />}
-            />
-            <Route
-              path="/add-vacation"
-              element={user ? <VacationForm /> : <Login />}
-            />
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+            <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
+            <Route path="/vacations" element={user ? <Vacations /> : <Login />} /> 
+            <Route path="/vacations/:vacationId" element={user ? <Vacation /> : <Login />} />
+            <Route path="/add-vacation" element={user ? <VacationForm /> : <Login />} />
+            <Route path="*" element={ <Home />} />
           </Routes>
         </div>
       </BrowserRouter>
