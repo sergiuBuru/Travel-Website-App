@@ -11,6 +11,10 @@ const vacationSchema = new Schema({
     type: String,
     required: true
   },
+  goals: {
+    type: String,
+    required: true
+  },
   attractions: [{
     type: String,
     required: false

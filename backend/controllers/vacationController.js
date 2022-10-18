@@ -30,8 +30,9 @@ const getVacation = async (req, res) => {
 
 // create new vacation
 const createVacation = async (req, res) => {
-  const {title, vacationDate} = req.body
+  const {title, vacationDate, goals} = req.body
 
+  console.log(title,vacationDate,goals)
   let emptyFields = []
 
   if(!title) {
@@ -40,6 +41,9 @@ const createVacation = async (req, res) => {
   if(!vacationDate) {
     emptyFields.push('vacationDate')
   }
+  if(!goals) {
+    emptyFields.push('goals')
+  }
   if(emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
   }
@@ -47,7 +51,7 @@ const createVacation = async (req, res) => {
   // add doc to db
   try {
     const user_id = req.user._id
-    const vacation = await Vacation.create({title, vacationDate, user_id})
+    const vacation = await Vacation.create({title, vacationDate, goals, user_id})
     res.status(200).json(vacation)
   } catch (error) {
     res.status(400).json({error: error.message})
