@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 // components
-import { Fab, Button } from "@mui/material"
+import { Fab } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
 import VacationCard from "../components/VacationCard";
 
@@ -15,7 +15,7 @@ const Vacations = () => {
 
   useEffect( () => {
     // Fetch the vacations
-    const response = fetch('/vacations', {
+    fetch('/vacations', {
       headers: {'Authorization' : `Bearer ${user.token}`}
     })
     .then(response => {
