@@ -1,8 +1,12 @@
 const Vacation = require('../models/vacationModel')
 const mongoose = require('mongoose')
+const path = require('path')
+const fs = require('fs')
+const express = require('express')
 
 // get all vacations
 const getVacations = async (req, res) => {
+  console.log("get vacs url is" + req.url)
   const user_id = req.user._id
 
   const vacations = await Vacation.find({user_id}).sort({createdAt: -1})
@@ -12,6 +16,7 @@ const getVacations = async (req, res) => {
 
 // get a single vacation
 const getVacation = async (req, res) => {
+
   const { id } = req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -52,8 +57,15 @@ const createVacation = async (req, res) => {
   try {
     const user_id = req.user._id
     const vacation = await Vacation.create({title, vacationDate, goals, user_id})
+
+    // create a vacation photos directory for this vacation 
+    const rootDir = path.resolve('./')
+    const vacationDir = path.join(rootDir, 'vacation_images', vacation._id.toString())
+    fs.mkdirSync(vacationDir)
+
     res.status(200).json(vacation)
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(400).json({error: error.message})
   }
 }
@@ -94,11 +106,35 @@ const updateVacation = async (req, res) => {
   res.status(200).json(vacation)
 }
 
+const uploadVacationPhoto = async (req, res) => {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'No such vacation'})
+  }
+
+  const vacation = await Vacation.findOne({_id: id})
+
+  if(!vacation) {
+    return res.status(400).json({error: 'No such vacation'})
+  }
+
+  vacation.vacationPhotos.push(req.file.filename)
+  await vacation.save()
+
+  res.status(200).json({photo: req.file.filename})
+}
+ 
+const getVacationPhotos = (req, res, next) => {
+  res.sendFile(path.join(process.cwd(), 'vacation_images', req.params.id, req.params.photo_name))
+}
 
 module.exports = {
   getVacations,
   getVacation,
   createVacation,
   deleteVacation,
-  updateVacation
+  updateVacation,
+  uploadVacationPhoto,
+  getVacationPhotos
 }

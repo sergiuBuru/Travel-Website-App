@@ -23,6 +23,10 @@ const vacationSchema = new Schema({
     type: String,
     required: false
   }],
+  vacationPhotos: [{
+    type: String,
+    require: false
+  }],
   user_id: {
     type: String,
     required: true
