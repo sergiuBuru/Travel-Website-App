@@ -104,19 +104,26 @@ html, body, .App, #root {
   padding-top: 10px;
 }
 
-.vacation-list-div {
+.vacation-list-div, .vacation-photo-gallery-div  {
   background-color: "white";
   border-radius: 5px;
   box-shadow: 0 0.4rem 0.5rem rgba(0, 0, 0, 0.15) !important;
   height: 100%;
 }
-.vacation-list-top-div{
+
+.vacation-list-top-div {
   position: relative;
   display: grid;
   grid-template-columns: auto auto;
 }
 
-.vacation-list-title {
+.vacation-photo-buttons-div {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.vacation-list-title, .vacation-gallery-title {
   font-size: 1.7rem;
   padding-top: 10px;
   padding-left: 15px;
@@ -129,6 +136,15 @@ html, body, .App, #root {
   padding-right: 5px;
 }
 
+.select-button-div {
+  margin-left: 15px;
+}
+
+.upload-button-div {
+  position: absolute;
+  right: 10px;
+}
+
 .vacation-listgroup {
   padding: 10px;
   margin-top: 0 !important;
@@ -136,4 +152,16 @@ html, body, .App, #root {
 
 .vacation-list-textfield{
   margin-top: 2% !important;
+}
+
+.vacation-selected-photo {
+  width: fit-content;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: rgb(10, 49, 75);
+  border-bottom: 2px solid grey;
+}
+
+.photo-gallery {
+  padding: 10px;
 }

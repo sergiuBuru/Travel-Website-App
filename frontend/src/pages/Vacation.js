@@ -1,8 +1,10 @@
 // components
 import { Stack } from "@mui/material"
 import VacationItemList from "../components/VacationItemList";
+import PhotoGallery from "../components/PhotoGallery";
 // hooks
 import { useLocation } from "react-router-dom"
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Vacation = () => {
   const location = useLocation();
@@ -27,6 +29,8 @@ const Vacation = () => {
           buttonTittle="Add to dos"
           vacation={vacation}  
         />
+        <PhotoGallery vacationId={vacation._id} vacationPhotos={vacation.vacationPhotos}/>
+
       </Stack>
     </div>
   )
