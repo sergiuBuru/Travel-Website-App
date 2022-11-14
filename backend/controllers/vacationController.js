@@ -2,7 +2,6 @@ const Vacation = require('../models/vacationModel')
 const mongoose = require('mongoose')
 const path = require('path')
 const fs = require('fs')
-const express = require('express')
 
 // get all vacations
 const getVacations = async (req, res) => {
@@ -108,7 +107,10 @@ const updateVacation = async (req, res) => {
 
 const uploadVacationPhoto = async (req, res) => {
   const { id } = req.params
+  const photoLocation = req.body.photoLocation
+  const status = req.body.status
 
+  console.log('photo location is: ', photoLocation)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such vacation'})
   }
@@ -119,7 +121,13 @@ const uploadVacationPhoto = async (req, res) => {
     return res.status(400).json({error: 'No such vacation'})
   }
 
+  // if the photo status is private then only add it to the vacationPhotos
+  // else add it to publicVacationPhotos too
   vacation.vacationPhotos.push(req.file.filename)
+  if(status === 'public') {
+    vacation.publicVacationPhotos.push(req.file.filename) 
+    vacation.publicVacationPhotosLocations.push(req.body.photoLocation)
+  }
   await vacation.save()
 
   res.status(200).json({photo: req.file.filename})
