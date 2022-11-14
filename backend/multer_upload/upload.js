@@ -4,6 +4,7 @@ const path = require('path')
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
+    // file is stored in folder with the name as the vacation id
     cb(null, 'vacation_images/' + req.params.id)
   },
   filename: function(req, file, cb) {
