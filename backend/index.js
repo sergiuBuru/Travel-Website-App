@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 })
 
 // routes
-app.use('/', homeRoutes)
+app.use('/home', homeRoutes)
 app.use('/user', userRoutes)
 app.use('/vacations', vacationRoutes)
 
