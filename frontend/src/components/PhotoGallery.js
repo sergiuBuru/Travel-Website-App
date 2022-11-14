@@ -1,11 +1,10 @@
 // hooks
 import { useState, useEffect } from "react"
-import axios from 'axios'
 import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
-import { Button, Stack, ImageList, ImageListItem } from '@mui/material'
-
+import { Button, Stack, ImageList, ImageListItem, TextField, Radio, RadioGroup, FormControlLabel } from '@mui/material'
+import { VisibilityOff } from '@mui/icons-material'
 
 const PhotoGallery = ({vacationId, vacationPhotos}) => {
   const { user } = useAuthContext()
@@ -15,9 +14,12 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
   const [allPhotos, setAllPhotos] = useState(vacationPhotos)
   // all photos fetched since loading this page
   const [fetchedPhotos, setFetchedPhotos] = useState([])
+  const [photoLocation, setPhotoLocation] = useState('')
+  // flag for whether the use wants the selected photo to be public or private
+  const [pub, setPublic] = useState(false)
+  const [priv, setPrivate] = useState(false)
 
   const fetchImage = async () => {
-    console.log('all photos: ', allPhotos)
     // keep fetching until we have fetched all the photos from the server
     if(fetchedPhotos.length < allPhotos.length) {
       const nextPhoto = allPhotos[fetchedPhotos.length]
@@ -44,7 +46,9 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('photo', selectedPhoto)
-
+    formData.append('photoLocation', photoLocation)
+    pub ? formData.append('status', "public") : formData.append('status', "private")
+    console.log('formdata: ', formData)
     // send the user selected picture to the server
     const response = await fetch(`/vacations/${vacationId}/upload_photo`, {
       method: 'POST',
@@ -58,6 +62,7 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
     if(response.ok) {
       setAllPhotos(allPhotos.concat(json.photo))
       setSelectedPhoto(null)
+      setPhotoLocation('')
     }
   }
 
@@ -66,20 +71,43 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
       <div className="vacation-gallery-title">
         Vacation Photos
       </div>
+
       <div className="vacation-photo-buttons-div">
         <div className="select-button-div">
           <Button variant="contained" component="label">
             Select Photo
             <input hidden accept=".png, .jpg, .jpeg" type="file" onChange={handleSelect}/>
           </Button>
-          <div className="vacation-selected-photo">
-            {selectedPhoto && "Selected file: " + selectedPhoto.name}
-          </div>
-        </div>
-        <div className="upload-button-div">
-          <Button variant="contained" onClick={handleUpload}>Upload Photo</Button>
         </div>
       </div>
+      {selectedPhoto &&
+      <div className="selected-photo-form">
+        <div className="vacation-selected-photo">
+          {"Selected file: " + selectedPhoto.name}
+        </div>
+        <div className="vacation-photo-location-div">
+          <TextField 
+            id="outlined-basic" 
+            label="Photo Location" 
+            variant="outlined"
+            value={photoLocation}
+            onChange={(e) => setPhotoLocation(e.target.value)} />
+        </div>
+        <div className="selected-photo-radiogroup">
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+            <FormControlLabel value="private" control={<Radio />} label="Private" onChange={e => {setPrivate(true); setPublic(false)}}/>
+            <FormControlLabel value="public" control={<Radio />} label="Public" onChange={e => {setPublic(true);setPrivate(false)}}/>
+          </RadioGroup>
+        </div>
+        <div className="upload-button-div">
+          <Button variant="contained" size="small" onClick={handleUpload}>Upload Photo</Button>
+        </div>
+      </div>  
+      }
       <div className="photo-gallery">
         <ImageList  cols={2} rowHeight={150} variant="quilted">
           {fetchedPhotos.map((photo) => (
