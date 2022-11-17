@@ -109,8 +109,10 @@ const uploadVacationPhoto = async (req, res) => {
   const { id } = req.params
   const photoLocation = req.body.photoLocation
   const status = req.body.status
+  const url = req.body.photoUrl
 
-  console.log('photo location is: ', photoLocation)
+  console.log(req.body)
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such vacation'})
   }
@@ -123,14 +125,14 @@ const uploadVacationPhoto = async (req, res) => {
 
   // if the photo status is private then only add it to the vacationPhotos
   // else add it to publicVacationPhotos too
-  vacation.vacationPhotos.push(req.file.filename)
+  vacation.vacationPhotos.push(url)
   if(status === 'public') {
-    vacation.publicVacationPhotos.push(req.file.filename) 
-    vacation.publicVacationPhotosLocations.push(req.body.photoLocation)
+    vacation.publicVacationPhotos.push(url) 
+    vacation.publicVacationPhotosLocations.push(photoLocation)
   }
   await vacation.save()
 
-  res.status(200).json({photo: req.file.filename})
+  res.status(200).send('photo saved')
 }
  
 const getVacationPhotos = (req, res, next) => {

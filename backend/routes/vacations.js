@@ -31,8 +31,8 @@ router.delete('/:id', deleteVacation)
 // UPDATE a vacation
 router.patch('/:id', updateVacation)
 
-// POST a vacation photo to the collection
-router.post('/:id/upload_photo', upload.single('photo'), uploadVacationPhoto)
+// POST a vacation photo
+router.post('/:id/upload_photo', uploadVacationPhoto)
 
 // GET all the photos for a specific vacation
 router.get('/:id/:photo_name', getVacationPhotos)
