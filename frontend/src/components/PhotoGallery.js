@@ -4,7 +4,6 @@ import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
 import { Button, Stack, ImageList, ImageListItem, TextField, Radio, RadioGroup, FormControlLabel } from '@mui/material'
-import { VisibilityOff } from '@mui/icons-material'
 
 const PhotoGallery = ({vacationId, vacationPhotos}) => {
   const { user } = useAuthContext()
@@ -13,29 +12,10 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
   // all photos the user currently has stored on the server
   const [allPhotos, setAllPhotos] = useState(vacationPhotos)
   // all photos fetched since loading this page
-  const [fetchedPhotos, setFetchedPhotos] = useState([])
+  const [fetchedPhotos, setFetchedPhotos] = useState(vacationPhotos)
   const [photoLocation, setPhotoLocation] = useState('')
-  // flag for whether the use wants the selected photo to be public or private
+  // flag for whether the user wants the selected photo to be public or private
   const [pub, setPublic] = useState(false)
-  const [priv, setPrivate] = useState(false)
-
-  const fetchImage = async () => {
-    // keep fetching until we have fetched all the photos from the server
-    if(fetchedPhotos.length < allPhotos.length) {
-      const nextPhoto = allPhotos[fetchedPhotos.length]
-      // console.log('fetching photo:  ', nextPhoto)
-      const res = await fetch(`/vacations/${vacationId}/${nextPhoto}`, {
-        headers: {'Authorization' : `Bearer ${user.token}`}
-      })
-      const imageBlob = await res.blob();
-      const imageObjectURL = URL.createObjectURL(imageBlob);
-      setFetchedPhotos(fetchedPhotos.concat(imageObjectURL))
-    }
-  }
-
-  useEffect( () => {
-    fetchImage()
-  }, [fetchImage])
 
   const handleSelect = (e) => {
     const photo = e.target.files[0]
@@ -44,23 +24,39 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
 
   const handleUpload = async (e) => {
     e.preventDefault()
-    const formData = new FormData()
-    formData.append('photo', selectedPhoto)
-    formData.append('photoLocation', photoLocation)
-    pub ? formData.append('status', "public") : formData.append('status', "private")
-    console.log('formdata: ', formData)
-    // send the user selected picture to the server
+    // create the request body for posting the iamge
+    const cloudinaryData = new FormData()
+    cloudinaryData.append('file', selectedPhoto)
+    cloudinaryData.append('upload_preset', 'travel-app-preset')
+
+    // post the photo to Cloudinary
+    const cloudinaryResponse = await fetch('https://api.Cloudinary.com/v1_1/doio2uvsw/image/upload', {
+      method: 'POST',
+      body: cloudinaryData
+    })
+    const photoJson = await cloudinaryResponse.json()
+    console.log(photoJson.url)
+
+    const url = photoJson.url
+    const s = pub ? 'public' : 'private'
+
+    // post the selected photo url, status and location to the backend
     const response = await fetch(`/vacations/${vacationId}/upload_photo`, {
       method: 'POST',
-      headers: {'Authorization' : `Bearer ${user.token}`},
-      body: formData
+      headers: {
+        'Authorization' : `Bearer ${user.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({'photoUrl': url, 'photoLocation': photoLocation, 'status': s})
     })
-    const json = await response.json()
     if(!response.ok) {
       console.log("res no ok")
     }
     if(response.ok) {
-      setAllPhotos(allPhotos.concat(json.photo))
+      console.log('before setting new photo', allPhotos)
+      setAllPhotos(allPhotos.concat(url))
+      console.log('after setting new photo', allPhotos)
+
       setSelectedPhoto(null)
       setPhotoLocation('')
     }
@@ -99,8 +95,8 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
             aria-labelledby="demo-row-radio-buttons-group-label"
             name="row-radio-buttons-group"
           >
-            <FormControlLabel value="private" control={<Radio />} label="Private" onChange={e => {setPrivate(true); setPublic(false)}}/>
-            <FormControlLabel value="public" control={<Radio />} label="Public" onChange={e => {setPublic(true);setPrivate(false)}}/>
+            <FormControlLabel value="private" control={<Radio />} label="Private" onChange={e => setPublic(false)}/>
+            <FormControlLabel value="public" control={<Radio />} label="Public" onChange={e => setPublic(true)}/>
           </RadioGroup>
         </div>
         <div className="upload-button-div">
@@ -110,11 +106,12 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
       }
       <div className="photo-gallery">
         <ImageList  cols={2} rowHeight={150} variant="quilted">
-          {fetchedPhotos.map((photo) => (
+          {allPhotos.map((photo) => (
             <ImageListItem key={photo}>
               <img
                 src={photo}
                 loading="lazy"
+                alt='err'
               />
             </ImageListItem>
           ))}
