@@ -8,7 +8,6 @@ const {
   uploadVacationPhoto,
   getVacationPhotos
 } = require('../controllers/vacationController')
-const upload = require('../multer_upload/upload')
 const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()

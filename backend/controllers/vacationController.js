@@ -5,7 +5,6 @@ const fs = require('fs')
 
 // get all vacations
 const getVacations = async (req, res) => {
-  console.log("get vacs url is" + req.url)
   const user_id = req.user._id
 
   const vacations = await Vacation.find({user_id}).sort({createdAt: -1})
@@ -36,7 +35,6 @@ const getVacation = async (req, res) => {
 const createVacation = async (req, res) => {
   const {title, vacationDate, goals} = req.body
 
-  console.log(title,vacationDate,goals)
   let emptyFields = []
 
   if(!title) {
@@ -56,11 +54,6 @@ const createVacation = async (req, res) => {
   try {
     const user_id = req.user._id
     const vacation = await Vacation.create({title, vacationDate, goals, user_id})
-
-    // create a vacation photos directory for this vacation 
-    const rootDir = path.resolve('./')
-    const vacationDir = path.join(rootDir, 'vacation_images', vacation._id.toString())
-    fs.mkdirSync(vacationDir)
 
     res.status(200).json(vacation)
   } 
@@ -110,8 +103,6 @@ const uploadVacationPhoto = async (req, res) => {
   const photoLocation = req.body.photoLocation
   const status = req.body.status
   const url = req.body.photoUrl
-
-  console.log(req.body)
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such vacation'})
