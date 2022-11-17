@@ -1,5 +1,5 @@
 // hooks
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
@@ -9,10 +9,9 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
   const { user } = useAuthContext()
   // photo the user selects for upload
   const [selectedPhoto, setSelectedPhoto] = useState(null)
-  // all photos the user currently has stored on the server
+  // photos stored in the vacation object + newly uploaded photos
   const [allPhotos, setAllPhotos] = useState(vacationPhotos)
-  // all photos fetched since loading this page
-  const [fetchedPhotos, setFetchedPhotos] = useState(vacationPhotos)
+  // when the user uploads a photo they set the location of where they took the photo 
   const [photoLocation, setPhotoLocation] = useState('')
   // flag for whether the user wants the selected photo to be public or private
   const [pub, setPublic] = useState(false)

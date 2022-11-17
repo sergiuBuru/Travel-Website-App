@@ -1,54 +1,41 @@
 import { useEffect, useState} from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-
+import uuid from 'react-uuid'
 // Components
 import Footer from '../components/Footer'
-import Button from '@mui/material/Button'
 
 const Home = () => {
   const { user } = useAuthContext()
-  const [fetchedPhotos, setPhotos] = useState([])
+  const [photosUrls, setUrls] = useState([])
   const [photosLocations, setLocations] = useState([])
 
-  useEffect( () => {
+  // fetch public photos from all users' vacations
+  const fetchPhotosInfo = () => {
+    fetch('home')
+    .then(res => res.json())
+    .then(data => {
+      data.photos.forEach((photo) => {
+        setUrls(current => [...current, photo.photo_url])
+        setLocations(current => [...current, photo.photo_location])
+      })
+      console.log(data.photos)
+    })
+  }
 
-    // get a list of photos from random users' vacations to 
-    const fetchPhotosInfo = async () => {
-      const res = await fetch('/home')
-      const photosInfo = await res.json()
-      const photos = photosInfo.photos
-      return photos
-    }
-
-    // for each photo object fetched, fetch the photo associated with it
-    const fetchPhotos = async () => {
-      const photos = await fetchPhotosInfo()
-      console.log('fetched photos: ', photos)
-      for(const photo of photos) {
-        const res = await fetch(`/home/${photo.vac_id}/${photo.vac_photo}`)
-        const imageBlob = await res.blob();
-        const imageObjectURL = URL.createObjectURL(imageBlob);
-        setPhotos(current => [...current, imageObjectURL])
-        setLocations(current => [...current, photo.vac_location])
-        console.log(imageObjectURL)
-        console.log(fetchedPhotos)
-      }
-    }
-
-    fetchPhotos()
+  useEffect(() => {
+    fetchPhotosInfo()
   }, [])
-
 
   return (
     <div className="home-container">
-      <h1 style={{marginBottom: 20}}>Users' Vacation Photos</h1>
-    {fetchedPhotos.map((pic, index) => {
+      <h1 style={{marginBottom: 30}}>Users' Vacation Photos</h1>
+    {photosUrls.map((url, index) => {
       return (
-        <div className="home-photo-div">
-          <div className="photo-div">
-            <img className="home-photo" src={pic} key={pic}></img> 
+        <div className="home-photo-div" key={uuid()}>
+          <div className="photo-div" key={uuid()}>
+            <img className="home-photo" src={url} key={url} alt='err'></img> 
           </div>
-          <p>📌 {photosLocations[index]}</p>  
+          <p key={uuid()}>📌 {photosLocations[index]}</p>  
         </div> 
       )
     })}
