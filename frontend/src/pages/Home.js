@@ -28,10 +28,10 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <h1 style={{marginBottom: 30}}>Users' Vacation Photos</h1>
+      <h1 style={{marginTop: 30}}>Users' Vacation Photos</h1>
     {photosUrls.map((url, index) => {
       return (
-        <div className="home-photo-div" key={uuid()}>
+        <div className="home-photo-div div-shadow-wrapper" key={uuid()}>
           <div className="photo-div" key={uuid()}>
             <img className="home-photo" src={url} key={url} alt='err'></img> 
           </div>

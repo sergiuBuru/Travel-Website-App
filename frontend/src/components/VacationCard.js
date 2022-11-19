@@ -9,16 +9,19 @@ const VacationCard = ( {vacation} ) => {
   const handleClick = () => {
     navigate(`/vacations/${vacation._id}`, {state : vacation})
   }
-
+  console.log(vacation.vacationPhotos)
   return (
-    <Card className='vacation-card'>
-      <Card.Header>{vacation.vacationDate}</Card.Header>
-      <Card.Body>
-        <Card.Title>{vacation.title}</Card.Title>
-        <Card.Text>{vacation.goals}</Card.Text>
-        <Button variant="primary" onClick={handleClick}>See details</Button>
-      </Card.Body>
-    </Card>
+      <Card className='vacation-card div-shadow-wrapper'>
+        <Card.Header>
+          {vacation.vacationDate}
+        </Card.Header>
+        {vacation.vacationPhotos.length > 0 && <Card.Img variant="top" src={vacation.vacationPhotos[0]}></Card.Img>}
+        <Card.Body>
+          <Card.Title>{vacation.title}</Card.Title>
+          <Card.Text>{vacation.goals}</Card.Text>
+          <Button variant="primary" onClick={handleClick}>See details</Button>
+        </Card.Body>
+      </Card>
   )
 }
 
