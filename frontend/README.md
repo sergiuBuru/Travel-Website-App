@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+# TravlR Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This is a website that acts as both a social media platform and also as a personal vacation management diary.
 
-## Available Scripts
+## How it works
+The website consists of 3 main pages:
+- Home page
+- Vacations page
+- Specific Vacation page
 
-In the project directory, you can run:
+#### Home page
+![home](https://user-images.githubusercontent.com/43687545/202879993-f6ee688f-d74b-4b23-820b-36856e14da33.png)
+The home page is where random pictures from users' vacations are displayed for everyone to see. This is to inspire and showcase places around the world.
 
-### `npm start`
+*These pictures are only selected if the owner of the picture opts to make them public.*
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+If the user is not logged in, they can create an account using their email and a password, or log in to their existing account. The backend uses Json Web Tokens to keep the user logged in for 3 days. Once the user is logged in, the popup at the bottom of the page will go away.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Vacations page
+![Screenshot from 2022-11-19 20-49-58](https://user-images.githubusercontent.com/43687545/202880377-3cf3cd68-f995-4eee-9657-68ed68b37d5a.png)
+The vacations page is where the user can see an overview of their past or planned vacations. They can also add a vacation by clicking the blue add button. 
 
-### `npm test`
+#### Specific vacation page
+![spec](https://user-images.githubusercontent.com/43687545/202880605-2fb33729-bdbf-4e17-b924-1b652ee9e436.png)
+Here the user can make a list of attractions they plan to visit and a todos list of things to take care of before they go on the vacation. Users can also add pictures from the vacation. If they choose to make a picture public then that picture could be randomly selected to show up on other user's home page.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies used
+The backend uses Expressjs for the api, Mongoose for the database(Nodejs libraries) and the database is hosted on MongoDB Atlas. The backend is hosted on Heroku.
 
-### `npm run build`
+The frontend is React with Bootstrap and Material UI for react and is it hosted on Netlify.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## How to install
+The website is http secure and can be accessed at https://quiet-cucurucho-9cb0b9.netlify.app
