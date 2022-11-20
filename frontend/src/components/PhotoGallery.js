@@ -21,6 +21,13 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
     setSelectedPhoto(photo)
   }
 
+  const getCols = () => {
+    const width = window.innerWidth
+    if(width < 400) {return 1}
+    else if(width < 600) {return 2}
+    else {return 3}
+  }
+
   const handleUpload = async (e) => {
     e.preventDefault()
     // create the request body for posting the iamge
@@ -34,7 +41,6 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
       body: cloudinaryData
     })
     const photoJson = await cloudinaryResponse.json()
-    console.log(photoJson.url)
 
     const url = photoJson.url
     const s = pub ? 'public' : 'private'
@@ -104,7 +110,7 @@ const PhotoGallery = ({vacationId, vacationPhotos}) => {
       </div>  
       }
       <div className="photo-gallery">
-        <ImageList  cols={2} rowHeight={150} variant="quilted">
+        <ImageList  className="img-list" cols={getCols()} rowHeight={250} variant="quilted">
           {allPhotos.map((photo) => (
             <ImageListItem key={photo}>
               <img

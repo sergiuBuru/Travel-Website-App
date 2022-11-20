@@ -18,7 +18,6 @@ const Home = () => {
         setUrls(current => [...current, photo.photo_url])
         setLocations(current => [...current, photo.photo_location])
       })
-      console.log(data.photos)
     })
   }
 

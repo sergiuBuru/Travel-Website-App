@@ -9,7 +9,6 @@ const VacationCard = ( {vacation} ) => {
   const handleClick = () => {
     navigate(`/vacations/${vacation._id}`, {state : vacation})
   }
-  console.log(vacation.vacationPhotos)
   return (
       <Card className='vacation-card div-shadow-wrapper'>
         <Card.Header>

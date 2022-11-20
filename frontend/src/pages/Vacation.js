@@ -12,10 +12,6 @@ const Vacation = () => {
   return (
     <div className="vacation-container">
       <Stack spacing={3} className="vacation-page-stack">
-        {/* <div className="vacation-title-div">
-          <div className="vacation-title">{vacation.title}</div>
-          <div className="vacation-date">{vacation.vacationDate}</div>
-        </div> */}
         <div className="vacation-basic-info-div">
           <h1>{vacation.title}</h1>
           <p>{vacation.vacationDate}</p>

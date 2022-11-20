@@ -18,23 +18,26 @@ const MyNav = () => {
   }
 
   return (
-    <Navbar bg="light" className='my-nav'>
+    <Navbar bg="light" className='my-nav' expand="md">
       <Container>
         <Navbar.Brand >Travel Media</Navbar.Brand>
-        <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            {user && <Nav.Link href="/vacations">Vacations</Nav.Link>}
-        </Nav>
-          {user && (
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>{user.email}</Navbar.Text>
-              <Button 
-                className="logout-btn"
-                variant="outline-dark"
-                size="sm"
-                onClick={handleLogout}>Logout</Button>
-          </Navbar.Collapse>
-          )}
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+              <Nav.Link href="/">Home</Nav.Link>
+              {user && <Nav.Link href="/vacations">Vacations</Nav.Link>}
+          </Nav>
+            {user && (
+              <Navbar.Collapse className="justify-content-end">
+                <Navbar.Text>{user.email}</Navbar.Text>
+                <Button 
+                  className="logout-btn"
+                  variant="outline-dark"
+                  size="sm"
+                  onClick={handleLogout}>Logout</Button>
+            </Navbar.Collapse>
+            )}
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   )
