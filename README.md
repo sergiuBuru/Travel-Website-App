@@ -31,4 +31,5 @@ The backend uses Expressjs for the api, Mongoose for the database(Nodejs librari
 The frontend is React with Bootstrap and Material UI for react and is it hosted on Netlify.
 
 ## How to install
-The website is http secure and can be accessed at https://quiet-cucurucho-9cb0b9.netlify.app
+The website is http secure and can be accessed at <a href="http://example.com/" target="https://quiet-cucurucho-9cb0b9.netlify.app">https://quiet-cucurucho-9cb0b9.netlify.app</a>
+
