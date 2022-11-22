@@ -3,12 +3,14 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import uuid from 'react-uuid'
 // Components
 import Footer from '../components/Footer'
+import Skeleton from '@mui/material/Skeleton';
 
 const Home = () => {
   const { user } = useAuthContext()
   const [photosUrls, setUrls] = useState([])
   const [photosLocations, setLocations] = useState([])
-
+  const [loaded, setLoaded] = useState(false)
+  const [dummy, setDummy] = useState([])
   // fetch public photos from all users' vacations
   const fetchPhotosInfo = () => {
     fetch('home')
@@ -17,18 +19,27 @@ const Home = () => {
       data.photos.forEach((photo) => {
         setUrls(current => [...current, photo.photo_url])
         setLocations(current => [...current, photo.photo_location])
+        setLoaded(true)
       })
     })
   }
 
   useEffect(() => {
+    setDummy(['skeleton1', 'skeleton2', 'skeleton3'])
     fetchPhotosInfo()
   }, [])
 
   return (
     <div className="home-container">
       <h1 style={{marginTop: 30}}>Users' Vacation Photos</h1>
-    {photosUrls.map((url, index) => {
+      {!loaded && dummy.map(skeleton => {return (
+          <div className="skeleton-div" key={skeleton}>
+            <Skeleton className="skeleton-photo" variant="rounded"/>
+            <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+          </div>)
+        })
+      }
+      {photosUrls.map((url, index) => {
       return (
         <div className="home-photo-div div-shadow-wrapper" key={uuid()}>
           <div className="photo-div" key={uuid()}>

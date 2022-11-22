@@ -216,8 +216,18 @@ html, body, .App, #root {
   margin-top: 20px;
 }
 
-@media screen and (max-width: 700px) {
-  
+@media screen and (max-height: 700px) {
+
+}
+
+.skeleton-div {
+  margin-top: 20px !important;
+  margin: 0 auto;
+  width: 40%;
+  height: 400px;
+}
+.skeleton-photo {
+  height: 70% !important
 }
 
 @media screen and (min-width: 1150px){
@@ -225,6 +235,11 @@ html, body, .App, #root {
   .home-photo-div { width: 20%;}
   .vacation-container {width: 50%;}
   .vacation-photo-gallery-div {height: 700px;}
+  .skeleton-div {
+    margin-top: 20px !important;
+    margin: 0 auto;
+    width: 25%;
+    height: 400px;}
 }
 
 @media screen and (min-width: 1000px){
